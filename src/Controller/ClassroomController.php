@@ -28,12 +28,19 @@ class ClassroomController extends AbstractController
         ]);
     }
 
-    // #[Route('/classroom/delete/{id}', name: 'app_classroom_read2')]
-    // public function delete(ClassroomRepository $repository, $id, Classroom $classroom): Response
-    // {
-    //     $repository->remove($classroom);
-    //     return $this->redirectToRoute('app_classroom_read', [], Response::HTTP_SEE_OTHER);
-    // }
+    #[Route('/classroom/delete/{id}', name: 'app_classroom_delete')]
+    public function delete(
+        ClassroomRepository $repository,
+        $id,
+        ManagerRegistry $doctrine
+    ): Response {
+        $em = $doctrine->getManager();
+        $classroom = $repository->find($id);
+        $em->remove($classroom);
+        $em->flush();
+        // update table (flush)
+        return $this->redirectToRoute('app_classroom_read');
+    }
 
     #[Route('/classroom', name: 'app_classroom')]
     public function index(): Response

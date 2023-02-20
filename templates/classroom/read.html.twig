@@ -46,6 +46,16 @@
               }}">
               edit
             </a> #}
+          <a href="{{
+            path(
+              'app_classroom_delete',
+              {
+                id: classroom.id
+              }
+            )
+            }}">
+            delete
+          </a>
         </td>
       </tr>
     {% else %}
