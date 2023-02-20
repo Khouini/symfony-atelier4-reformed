@@ -3,13 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Classroom;
+use App\Form\ClassroomType;
 use App\Repository\ClassroomRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 class ClassroomController extends AbstractController
 {
+    #[Route('/classroom', name: 'app_classroom')]
+    public function index(): Response
+    {
+        return $this->render('classroom/index.html.twig', [
+            'controller_name' => 'ClassroomController',
+        ]);
+    }
+
     #[Route('/classroom/read', name: 'app_classroom_read')]
     public function read(ManagerRegistry $doctrine): Response
     {
@@ -42,11 +53,26 @@ class ClassroomController extends AbstractController
         return $this->redirectToRoute('app_classroom_read');
     }
 
-    #[Route('/classroom', name: 'app_classroom')]
-    public function index(): Response
-    {
-        return $this->render('classroom/index.html.twig', [
-            'controller_name' => 'ClassroomController',
+    #[Route('/classroom/create', name: 'app_classroom_create')]
+    public function create(
+        ManagerRegistry $doctrine,
+        Request $request,
+        ClassroomRepository $classroomRepository,
+    ): Response {
+        $classroom = new Classroom();
+        // createForm => créer le formulaire construit dans le buildForm (classroomType)
+        $form = $this->createForm(ClassroomType::class, $classroom);
+        $form->handleRequest($request);
+        // traiter la requete reçu (handleRequest)
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            // $classroomRepository->save($classroom, true);
+            $em->persist($classroom);
+            $em->flush();
+            return $this->redirectToRoute('app_classroom_read');
+        }
+        return $this->renderForm('classroom/create.html.twig', [
+            'form' => $form,
         ]);
     }
 }
