@@ -75,4 +75,30 @@ class ClassroomController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/classroom/edit/{id}', name: 'app_classroom_edit')]
+    public function edit(
+        ClassroomRepository $repository,
+        $id,
+        ManagerRegistry $doctrine,
+        Request $request
+    ): Response {
+        $em = $doctrine->getManager();
+        $foundedClassroom = $repository->find($id);
+        $classroom = new Classroom();
+        // createForm => créer le formulaire construit dans le buildForm (classroomType)
+        $form = $this->createForm(ClassroomType::class, $foundedClassroom);
+        $form->handleRequest($request);
+        // traiter la requete reçu (handleRequest)
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            // $classroomRepository->save($classroom, true);
+            $em->persist($foundedClassroom);
+            $em->flush();
+            return $this->redirectToRoute('app_classroom_read');
+        }
+        return $this->renderForm('classroom/edit.html.twig', [
+            'form' => $form,
+        ]);    
+    }
 }
