@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class ClassroomController extends AbstractController
 {
     #[Route('/classroom', name: 'app_classroom')]
@@ -89,6 +91,7 @@ class ClassroomController extends AbstractController
         // createForm => créer le formulaire construit dans le buildForm (classroomType)
         $form = $this->createForm(ClassroomType::class, $foundedClassroom);
         $form->handleRequest($request);
+        // $form->add('modifier', SubmitType::class);
         // traiter la requete reçu (handleRequest)
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $doctrine->getManager();
