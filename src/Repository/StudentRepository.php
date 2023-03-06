@@ -113,4 +113,12 @@ class StudentRepository extends ServiceEntityRepository
             ->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne between :min AND :max')->setParameters(['min' => $min, 'max' => $max]);
         return $query->getResult();
     }
+
+    public function findByClassroomName($name): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery('SELECT avg(s.moyenne)  as Moyenne, c.name FROM App\Entity\Student s JOIN  s.classroom c  WHERE c.name = :name')->setParameter('name', $name);
+        return $query->getResult();
+    }
 }
