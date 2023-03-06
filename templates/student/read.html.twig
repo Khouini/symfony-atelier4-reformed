@@ -2,6 +2,13 @@
   student index
 </h1>
 {{ dump(students) }}
+<form action="{{ path('app_student_moyenneMinMax') }}" method="get">
+  <label for="fname">Min:</label>
+  <input type="text" id="min" name="min"><br><br>
+  <label for="fname">Max:</label>
+  <input type="text" id="max" name="max"><br><br>
+  <input type="submit" value="Submit">
+</form>
 <table border="2">
   <thead>
     <tr>

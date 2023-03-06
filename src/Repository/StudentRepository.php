@@ -98,4 +98,19 @@ class StudentRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne > =10');
         return $query->getResult();
     }
+
+    // public function searchByMoyenne($min, $max)
+    // {
+    //     $entityManager = $this->getEntityManager();
+    //     $query = $entityManager->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne >=' . $min and 's.moyenne <=' . $max);
+    //     return $query->getResult();
+    // }
+
+    public function findByMoyenne($min, $max)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne between :min AND :max')->setParameters(['min' => $min, 'max' => $max]);
+        return $query->getResult();
+    }
 }

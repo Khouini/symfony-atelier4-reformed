@@ -43,6 +43,17 @@ class StudentController extends AbstractController
         ]);
     }
 
+    #[Route('/student/moyenneMinMax', name: 'app_student_moyenneMinMax')]
+    public function getMoyenneMinMax(StudentRepository $repo, Request $request): Response
+    {
+        $min = $request->get("min");
+        $max = $request->get("max");
+        $list = $repo->findByMoyenne($min, $max);
+        return $this->render('student/read.html.twig', [
+            'students' => $list,
+        ]);
+    }
+
     #[Route('/student/listordonne', name: 'app_student_liste_ordonne')]
     public function listOrdonne(StudentRepository $repo): Response
     {
