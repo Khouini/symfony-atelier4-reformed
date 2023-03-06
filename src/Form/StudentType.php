@@ -13,15 +13,14 @@ class StudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('email')
-        ->add('nsc')
-    ->add('classroom', EntityType::class, [
+            ->add('email')
+            ->add('nsc')
+            ->add('classroom', EntityType::class, [
                 'class' => Classroom::class,
                 'choice_label' => 'name',
                 'multiple' => false,
                 'expanded' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -67,9 +67,30 @@ class StudentRepository extends ServiceEntityRepository
     {
         $req = $this->createQueryBuilder('s')
             ->orderBy("s.Email", 'ASC')
-            ->setMaxResults(1)
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult();
         return $req;
     }
+
+    public function findByEmail($email)
+    {
+        $req = $this->createQueryBuilder('s')
+            ->where("s.Email like :val")
+            ->setParameter('val', "%" . $email . "%")->getQuery()
+            ->getResult();
+        return $req;
+    }
+
+    // public function findByEmail($value): array
+    // {
+    //     return $this->createQueryBuilder('s')
+    //         ->andWhere('s.Email = :val')
+    //         ->setParameter('val', $value)
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+
 }

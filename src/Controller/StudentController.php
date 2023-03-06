@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Form\SearchStudentType;
 use App\Form\StudentType;
 use App\Repository\ClassroomRepository;
 use App\Repository\StudentRepository;
@@ -39,6 +40,26 @@ class StudentController extends AbstractController
         $list = $repo->orderByEmail();
         return $this->render('student/read.html.twig', [
             'students' => $list,
+        ]);
+    }
+
+    #[Route('/student/search', name: 'app_student_search')]
+    public function searchByEmail(StudentRepository $repo,  Request $request, ManagerRegistry $doctrine): Response
+    {
+        $student = new Student();
+        $form = $this->createForm(SearchStudentType::class, $student);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $Email = $student->getEmail();
+            $list = $repo->findByEmail($Email);
+            return $this->render('student/read.html.twig', [
+                'students' => $list,
+            ]);
+        }
+        $repository = $doctrine->getRepository(Student::class);
+        return $this->renderForm('student/search.html.twig', [
+            'form' => $form,
+            'students' =>  $repository->findAll()
         ]);
     }
 
