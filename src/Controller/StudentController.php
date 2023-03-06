@@ -33,6 +33,15 @@ class StudentController extends AbstractController
         ]);
     }
 
+    #[Route('/student/listordonne', name: 'app_student_liste_ordonne')]
+    public function listOrdonne(StudentRepository $repo): Response
+    {
+        $list = $repo->orderByEmail();
+        return $this->render('student/read.html.twig', [
+            'students' => $list,
+        ]);
+    }
+
     #[Route('/student/create', name: 'app_student_create')]
     public function create(
         ManagerRegistry $doctrine,
@@ -89,6 +98,6 @@ class StudentController extends AbstractController
         }
         return $this->renderForm('student/form.html.twig', [
             'form' => $form,
-        ]);    
+        ]);
     }
 }
