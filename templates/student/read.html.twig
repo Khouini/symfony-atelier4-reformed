@@ -1,7 +1,7 @@
 <h1>
   student index
 </h1>
-{# {{ dump(students) }} #}
+{{ dump(students) }}
 <table border="2">
   <thead>
     <tr>
@@ -16,6 +16,9 @@
       </th>
       <th>
         classroom name
+      </th>
+      <th>
+        Moyenne
       </th>
       <th>
         actions
@@ -36,6 +39,9 @@
         </td>
          <td>
           {{ student.classroom.name }}
+        </td>
+         <td>
+          {{ student.moyenne }}
         </td>
         <td>
            <a href="{{

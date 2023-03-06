@@ -34,6 +34,15 @@ class StudentController extends AbstractController
         ]);
     }
 
+    #[Route('/student/admis', name: 'app_student_admis')]
+    public function getAdmis(StudentRepository $repo): Response
+    {
+        $list = $repo->searchByAdmis();
+        return $this->render('student/read.html.twig', [
+            'students' => $list,
+        ]);
+    }
+
     #[Route('/student/listordonne', name: 'app_student_liste_ordonne')]
     public function listOrdonne(StudentRepository $repo): Response
     {

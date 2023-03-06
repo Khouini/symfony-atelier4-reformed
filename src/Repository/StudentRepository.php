@@ -92,5 +92,10 @@ class StudentRepository extends ServiceEntityRepository
     //         ->getResult();
     // }
 
-
+    public function searchByAdmis()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne > =10');
+        return $query->getResult();
+    }
 }
