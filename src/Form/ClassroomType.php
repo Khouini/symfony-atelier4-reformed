@@ -14,7 +14,8 @@ class ClassroomType extends AbstractType
         FormBuilderInterface $builder,
         array $options
     ): void {
-        $builder->add('name')->add('save', SubmitType::class);
+        $builder->add('name')
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

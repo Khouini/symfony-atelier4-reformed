@@ -2,18 +2,18 @@
   student index
 </h1>
 {{ dump(students) }}
-<form action="{{ path('app_student_moyenneMinMax') }}" method="get">
+{# <form action="{{ path('app_student_moyenneMinMax') }}" method="get">
   <label for="fname">Min:</label>
   <input type="text" id="min" name="min"><br><br>
   <label for="fname">Max:</label>
   <input type="text" id="max" name="max"><br><br>
   <input type="submit" value="Submit">
-</form>
+</form> #}
 <table border="2">
   <thead>
     <tr>
       <th>
-        nsc
+        id
       </th>
       <th>
         Email
@@ -24,9 +24,9 @@
       <th>
         classroom name
       </th>
-      <th>
+      {# <th>
         Moyenne
-      </th>
+      </th> #}
       <th>
         actions
       </th>
@@ -36,7 +36,7 @@
     {% for student in students %}
       <tr>
         <td>
-          {{ student.nsc }}
+          {{ student.id }}
         </td>
         <td>
           {{ student.email }}
@@ -47,15 +47,15 @@
          <td>
           {{ student.classroom.name }}
         </td>
-         <td>
+         {# <td>
           {{ student.moyenne }}
-        </td>
+        </td> #}
         <td>
            <a href="{{
               path(
                 'app_student_edit',
                 {
-                  id: student.nsc
+                  id: student.id
                 }
               )
               }}">
@@ -65,7 +65,7 @@
             path(
               'app_student_delete',
               {
-                id: student.nsc
+                id: student.id
               }
             )
             }}">
@@ -85,4 +85,4 @@
 
 <a href="{{ path('app_student_create') }}">Create new</a>
 
-<a href="{{ path('app_student_liste_ordonne') }}">Trier par Email</a>
+{# <a href="{{ path('app_student_liste_ordonne') }}">Trier par Email</a> #}
